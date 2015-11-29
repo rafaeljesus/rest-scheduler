@@ -1,6 +1,13 @@
 ## Rest Scheduler
 
-[ ![Codeship Status for rafaeljesus/rest-scheduler](https://codeship.com/projects/5fb5b430-7864-0133-0133-4ab273700aba/status?branch=master)](https://codeship.com/projects/118570) [![bitHound Overalll Score](https://www.bithound.io/github/rafaeljesus/rest-scheduler/badges/score.svg)](https://www.bithound.io/github/rafaeljesus/rest-scheduler) [![bitHound Dependencies](https://www.bithound.io/github/rafaeljesus/rest-scheduler/badges/dependencies.svg)](https://www.bithound.io/github/rafaeljesus/rest-scheduler/master/dependencies/npm) [![bitHound Dev Dependencies](https://www.bithound.io/github/rafaeljesus/rest-scheduler/badges/devDependencies.svg)](https://www.bithound.io/github/rafaeljesus/rest-scheduler/master/dependencies/npm) [![bitHound Code](https://www.bithound.io/github/rafaeljesus/rest-scheduler/badges/code.svg)](https://www.bithound.io/github/rafaeljesus/rest-scheduler)
+[ ![Codeship Status for rafaeljesus/rest-scheduler](https://codeship.com/projects/5fb5b430-7864-0133-0133-4ab273700aba/status?branch=master)](https://codeship.com/projects/118570)
+[![Node version](https://img.shields.io/node/v/latest-version.svg)](https://npmjs.org/package/rest-scheduler)
+[![NPM version](http://img.shields.io/npm/v/rest-scheduler.svg)](https://www.npmjs.org/package/rest-scheduler)
+[![bitHound Overalll Score](https://www.bithound.io/github/rafaeljesus/rest-scheduler/badges/score.svg)](https://www.bithound.io/github/rafaeljesus/rest-scheduler)
+[![bitHound Dependencies](https://www.bithound.io/github/rafaeljesus/rest-scheduler/badges/dependencies.svg)](https://www.bithound.io/github/rafaeljesus/rest-scheduler/master/dependencies/npm)
+[![bitHound Dev Dependencies](https://www.bithound.io/github/rafaeljesus/rest-scheduler/badges/devDependencies.svg)](https://www.bithound.io/github/rafaeljesus/rest-scheduler/master/dependencies/npm)
+[![bitHound Code](https://www.bithound.io/github/rafaeljesus/rest-scheduler/badges/code.svg)](https://www.bithound.io/github/rafaeljesus/rest-scheduler)
+
 
 * Handles job scheduling by storing and managing events that correspond to actions to execute in the future.
 
