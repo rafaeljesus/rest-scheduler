@@ -8,17 +8,23 @@
 [![bitHound Dev Dependencies](https://www.bithound.io/github/rafaeljesus/rest-scheduler/badges/devDependencies.svg)](https://www.bithound.io/github/rafaeljesus/rest-scheduler/master/dependencies/npm)
 [![bitHound Code](https://www.bithound.io/github/rafaeljesus/rest-scheduler/badges/code.svg)](https://www.bithound.io/github/rafaeljesus/rest-scheduler)
 
-
 * Handles job scheduling by storing and managing events that correspond to actions to execute in the future.
+
+## Installation
+```bash
+npm install -g rest-scheduler
+```
+
+## Running tests
+To run a suite tests execute:
+```bash
+npm test
+```
 
 ## Built with
 - [nodejs](https://https://nodejs.org) Backend is a node-v.5.1.0.
 - [koa](http://koajs.com) API is a KOA app. It respond to requests RESTfully in JSON.
 - [Mongodb](https://www.mongodb.com) Mongodb as a data store.
-
-## Running tests ###
-To run a suite tests execute:
-  npm test
 
 ## API documentation
 We use source code comments to add documentation.
