@@ -1,5 +1,7 @@
 ## Scheduler API
 
+[ ![Codeship Status for rafaeljesus/scheduler-api](https://codeship.com/projects/5fb5b430-7864-0133-0133-4ab273700aba/status?branch=master)](https://codes
+
 * Handles job scheduling by storing and managing events that correspond to actions to execute in the future.
 
 ## Built with
