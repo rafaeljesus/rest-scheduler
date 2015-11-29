@@ -28,7 +28,8 @@ npm test
 
 ## API documentation
 We use source code comments to add documentation.
-You can browse an HTML documenation at `/apidoc/index.html`
+
+You can browse an HTML documenation at `http://rest-scheduler.herokuapp.com/apidoc/index.html`
 
 ## Contributing
 - Fork it
