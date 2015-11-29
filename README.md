@@ -1,6 +1,6 @@
 ## Scheduler API
 
-[ ![Codeship Status for rafaeljesus/scheduler-api](https://codeship.com/projects/5fb5b430-7864-0133-0133-4ab273700aba/status?branch=master)](https://codes
+[ ![Codeship Status for rafaeljesus/scheduler-api](https://codeship.com/projects/5fb5b430-7864-0133-0133-4ab273700aba/status?branch=master)](https://codeship.com/projects/118570) [![bitHound Overalll Score](https://www.bithound.io/github/rafaeljesus/scheduler-api/badges/score.svg)](https://www.bithound.io/github/rafaeljesus/scheduler-api) [![bitHound Dependencies](https://www.bithound.io/github/rafaeljesus/scheduler-api/badges/dependencies.svg)](https://www.bithound.io/github/rafaeljesus/scheduler-api/master/dependencies/npm) [![bitHound Dev Dependencies](https://www.bithound.io/github/rafaeljesus/scheduler-api/badges/devDependencies.svg)](https://www.bithound.io/github/rafaeljesus/scheduler-api/master/dependencies/npm) [![bitHound Code](https://www.bithound.io/github/rafaeljesus/scheduler-api/badges/code.svg)](https://www.bithound.io/github/rafaeljesus/scheduler-api)
 
 * Handles job scheduling by storing and managing events that correspond to actions to execute in the future.
 
