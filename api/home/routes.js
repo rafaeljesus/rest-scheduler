@@ -9,13 +9,13 @@ const krouter = require('koa-router')
  * @apiSuccessExample {json} Success
  *    HTTP/1.1 200 OK
  *    {
- *      "status": "Scheduler API"
+ *      "status": "Rest Scheduler API"
  *    }
  */
 router.
   get('/', function *() {
     this.status = 200
-    this.body = {status: 'Scheduler API'}
+    this.body = {status: 'Rest Scheduler API'}
   })
 
 module.exports = router
