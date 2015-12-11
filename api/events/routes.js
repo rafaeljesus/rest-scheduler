@@ -62,7 +62,6 @@ router.
       Scheduler.update(_id, body)
       this.body = res
     } catch (err) {
-      console.log(err)
       this.throw(412, err)
     }
   }).

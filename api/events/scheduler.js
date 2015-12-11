@@ -4,6 +4,7 @@ const Promise = require('bluebird')
   , request = Promise.promisifyAll(require('request'))
   , scheduler = require('node-schedule')
   , Event = require('./collection')
+  , log = require('../../config/log')
 
 let scheduledEvents = {}
 
@@ -23,7 +24,7 @@ exports.start = function() {
       return Promise.each(docs, this.create)
     }).
     catch(err => {
-      console.log('scheduler failed to start', err)
+      log.info('scheduler failed to start', err)
     })
 }
 
@@ -36,16 +37,16 @@ exports.create = function(event) {
     return request.
       getAsync({url: event.url}).
       then(res => {
-        console.log('scheduler#job sent', {
+        log.info('scheduler#job sent', {
           statusCode: res.statusCode,
           body: res.body,
           headers: res.headers
         })
       }).
-      catch(err => console.error('scheduler#job failed to send', err))
+      catch(err => log.error('scheduler#job failed to send', err))
   })
 
-  console.log('scheduler#job scheduled', event)
+  log.info('scheduler#job scheduled', event)
   return scheduledEvents
 }
 

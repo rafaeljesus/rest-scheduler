@@ -4,7 +4,7 @@
   "description": "Handles job scheduling and execute in the future",
   "main": "./index.js",
   "scripts": {
-    "start": "npm run gendoc && node --optimize_for_size --max_old_space_size=460 --gc_interval=100 ./bin/www.js",
+    "start": "npm run gendoc && node --optimize_for_size --max_old_space_size=460 --gc_interval=100 ./bin/www",
     "test": "npm run lint && NODE_ENV=test mocha",
     "gendoc": "apidoc -i api/ -o ./public/apidoc",
     "lint": "eslint ."
@@ -14,6 +14,7 @@
   "dependencies": {
     "apidoc": "0.13.1",
     "bluebird": "3.0.5",
+    "bunyan": "^1.5.1",
     "debug": "2.2.0",
     "kcors": "1.0.1",
     "koa": "1.1.2",
