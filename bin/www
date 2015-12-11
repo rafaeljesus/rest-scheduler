@@ -1,7 +1,8 @@
-'use strict'
+#!/usr/bin/env node
 
 const http = require('http')
   , Scheduler = require('../api/events/scheduler')
+  , log = require('../config/log')
   , app = require('../')
   , port = process.env.PORT || 3000
 
@@ -12,4 +13,4 @@ Scheduler.start()
 http.globalAgent.maxSockets = Infinity
 http.createServer(app.callback())
 app.listen(port)
-console.log(`Rest Scheduler API - port ${port}`)
+log.info(`Rest Scheduler API - port ${port}`)
