@@ -29,7 +29,7 @@ npm test
 ## Docker
 This repository has automated image builds on hub.docker.com. So you can also
 run:
-``
+```
 $ docker-machine start default
 $ eval $(docker-machine env default)
 $ docker run -it -p 3000 rafaeljesus/rest-scheduler
