@@ -26,6 +26,15 @@ npm test
 - [koa](http://koajs.com) API is a KOA app. It respond to requests RESTfully in JSON.
 - [Mongodb](https://www.mongodb.com) Mongodb as a data store.
 
+## Docker
+This repository has automated image builds on hub.docker.com. So you can also
+run:
+``
+$ docker-machine start default
+$ eval $(docker-machine env default)
+$ docker run -it -p 3000 rafaeljesus/rest-scheduler
+```
+
 ## API documentation
 We use source code comments to add documentation.
 
