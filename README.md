@@ -32,7 +32,7 @@ run:
 ```
 $ docker-machine start default
 $ eval $(docker-machine env default)
-$ docker run -it -p 3000 rafaeljesus/rest-scheduler
+$ docker run -it -p 3000:3000 rafaeljesus/rest-scheduler
 ```
 
 ## API documentation
