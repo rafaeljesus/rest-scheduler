@@ -22,7 +22,7 @@ npm test
 ```
 
 ## Built with
-- [nodejs](https://https://nodejs.org) Backend is a node-v.5.1.0.
+- [nodejs](https://https://nodejs.org) Backend is a node-v.5.3.0.
 - [koa](http://koajs.com) API is a KOA app. It respond to requests RESTfully in JSON.
 - [Mongodb](https://www.mongodb.com) Mongodb as a data store.
 
