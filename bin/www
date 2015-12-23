@@ -12,5 +12,7 @@ Scheduler.start()
 
 http.globalAgent.maxSockets = Infinity
 http.createServer(app.callback())
+
 app.listen(port)
+
 log.info(`Rest Scheduler API - port ${port}`)
