@@ -1,10 +1,12 @@
 'use strict'
 
 const Promise = require('bluebird')
-  , request = Promise.promisifyAll(require('request'))
+  , request = require('request')
   , scheduler = require('node-schedule')
   , Event = require('./collection')
   , log = require('../../config/log')
+
+Promise.promisifyAll(request)
 
 let scheduledEvents = {}
 
@@ -23,9 +25,7 @@ exports.start = function() {
       if (skip) return
       return Promise.each(docs, this.create)
     }).
-    catch(err => {
-      log.info('scheduler failed to start', err)
-    })
+    catch(err => log.info(`scheduler failed to start ${err}`))
 }
 
 exports.create = function(event) {
@@ -43,7 +43,7 @@ exports.create = function(event) {
           headers: res.headers
         })
       }).
-      catch(err => log.error('scheduler#job failed to send', err))
+      catch(err => log.error(`scheduler#job failed to send ${err}`))
   })
 
   log.info('scheduler#job scheduled', event)
