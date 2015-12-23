@@ -28,15 +28,16 @@ router.
    *    HTTP/1.1 422 Unprocessable Entity
    */
   post('/v1/events', function *() {
-    try {
-      let event = this.request.body
-      let res = yield Event.createAsync(event)
-      event._id = res._id
-      Scheduler.create(event)
-      this.body = res._id
-    } catch (err) {
-      this.throw(412, err)
-    }
+    const event = this.request.body
+    yield Event.
+      createAsync(event).
+      bind(this).
+      then(res => {
+        event._id = res._id
+        Scheduler.create(event)
+        this.body = res._id
+      }).
+      catch(err => this.throw(422, err))
   }).
   /**
    * @api {put} /v1/events/:id Update a Event
@@ -55,15 +56,16 @@ router.
    *    HTTP/1.1 412 Precondition Failed
    */
   put('/v1/events/:id', function *() {
-    try {
-      let body = this.request.body
-      const _id = this.params.id
-      let res = yield Event.findByIdAndUpdateAsync(_id, body)
-      Scheduler.update(_id, body)
-      this.body = res
-    } catch (err) {
-      this.throw(412, err)
-    }
+    const body = this.request.body
+    const _id = this.params.id
+    yield Event.
+      findByIdAndUpdateAsync(_id, body).
+      bind(this).
+      then(res => {
+        Scheduler.update(_id, body)
+        this.body = res
+      }).
+      catch(err => this.throw(412, err))
   }).
   /**
    * @api {get} /v1/events/:id Get detailed info about event
@@ -75,7 +77,7 @@ router.
    * @apiSuccess {String} status Status
    * @apiExample {json} Example usage:
    *    curl -X GET http://scheduler-api/v1/events/:id \
-   * @apiSuccessExample {json} Sucesso
+   * @apiSuccessExample {json} Sucess
    *    HTTP/1.1 200 OK
    *    {
    *      "_id": 198789879678565,
@@ -88,12 +90,15 @@ router.
    *    HTTP/1.1 412 Precondition Failed
    */
   get('/v1/events/:id', function *() {
-    try {
-      const _id = this.params.id
-      this.body = yield Event.findByIdAsync(_id)
-    } catch (err) {
-      this.throw(412, err)
-    }
+    const _id = this.params.id
+    yield Event.
+      findByIdAsync(_id).
+      bind(this).
+      then(res => {
+        if (!res) return this.throw(404)
+        this.body = res
+      }).
+      catch(err => this.throw(412, err))
   }).
   /**
    * @api {delete} /v1/events/:id Exclude a event
@@ -107,16 +112,15 @@ router.
    *    HTTP/1.1 412 Precondition Failed
    */
   delete('/v1/events/:id', function *() {
-    try {
-      const _id = this.params.id
-      yield [
-        Event.removeAsync({_id: _id}),
-        Scheduler.cancel(_id)
-      ]
+    const _id = this.params.id
+    yield Promise.race([
+      Event.removeAsync({_id: _id}),
+      Scheduler.cancel(_id)
+    ]).
+    then(() => {
       this.status = 204
-    } catch (err) {
-      this.throw(412, err)
-    }
+    }).
+    catch(err => this.throw(412, err))
   })
 
 module.exports = router
