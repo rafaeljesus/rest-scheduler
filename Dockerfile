@@ -4,6 +4,6 @@ ADD . /rest-scheduler
 
 WORKDIR /rest-scheduler
 
-RUN npm i --production
+RUN npm i
 
 CMD ["npm", "start"]
