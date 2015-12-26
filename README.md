@@ -28,8 +28,11 @@ npm test
 - [Mongodb](https://www.mongodb.com) Mongodb as a data store.
 
 ## Docker
-This repository has automated image builds on hub.docker.com. So you can also
-run:
+This repository has automated image builds on hub.docker.com.
+
+Use [docker-mongodb](https://github.com/rafaeljesus/docker-mongodb) and run command described there
+
+Finally  run:
 ```
 $ docker-machine start default
 $ eval $(docker-machine env default)
