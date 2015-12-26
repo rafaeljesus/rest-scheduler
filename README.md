@@ -1,7 +1,8 @@
 ## Rest Scheduler
 
-[ ![Codeship Status for rafaeljesus/rest-scheduler](https://codeship.com/projects/5fb5b430-7864-0133-0133-4ab273700aba/status?branch=master)](https://codeship.com/projects/118570)
-[![Node version](https://img.shields.io/node/v/latest-version.svg)](https://npmjs.org/package/rest-scheduler)
+[![Codeship Status for rafaeljesus/rest-scheduler](https://codeship.com/projects/5fb5b430-7864-0133-0133-4ab273700aba/status?branch=master)](https://codeship.com/projects/118570)
+[![Docker Image Size](https://img.shields.io/imagelayers/image-size/rafaeljesus/rest-scheduler/latest.svg)](https://hub.docker.com/r/rafaeljesus/rest-scheduler/)
+[![Docker Image Pulls](https://img.shields.io/docker/pulls/rafaeljesus/rest-scheduler.svg)](https://hub.docker.com/r/rafaeljesus/rest-scheduler/)
 [![NPM version](http://img.shields.io/npm/v/rest-scheduler.svg)](https://www.npmjs.org/package/rest-scheduler)
 [![bitHound Overalll Score](https://www.bithound.io/github/rafaeljesus/rest-scheduler/badges/score.svg)](https://www.bithound.io/github/rafaeljesus/rest-scheduler)
 [![bitHound Dependencies](https://www.bithound.io/github/rafaeljesus/rest-scheduler/badges/dependencies.svg)](https://www.bithound.io/github/rafaeljesus/rest-scheduler/master/dependencies/npm)
@@ -33,6 +34,7 @@ run:
 $ docker-machine start default
 $ eval $(docker-machine env default)
 $ docker run -it -e "NODE_ENV=development" -v "$(pwd)":/data --link mongo:mongo -w /data -p 3000:3000 rafaeljesus/rest-scheduler
+$ curl `docker-machine ip default`:3000
 ```
 
 ## API documentation
