@@ -32,7 +32,7 @@ run:
 ```
 $ docker-machine start default
 $ eval $(docker-machine env default)
-$ docker run -it -p 3000:3000 -e "NODE_ENV=development" --link mongo:mongo rafaeljesus/rest-scheduler
+$ docker run -it -e "NODE_ENV=development" -v "$(pwd)":/data --link mongo:mongo -w /data -p 3000:3000 rafaeljesus/rest-scheduler
 ```
 
 ## API documentation
