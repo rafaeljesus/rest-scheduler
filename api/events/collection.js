@@ -1,10 +1,7 @@
 'use strict'
 
-const Promise = require('bluebird')
-  , mongoose = require('mongoose')
+const mongoose = require('mongoose')
   , Schema = mongoose.Schema
-
-Promise.promisifyAll(mongoose)
 
 const Status = [
   'ACTIVE',

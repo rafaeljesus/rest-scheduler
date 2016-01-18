@@ -1,12 +1,9 @@
 'use strict'
 
-const Promise = require('bluebird')
-  , request = require('request')
+const request = require('request')
   , scheduler = require('node-schedule')
   , Event = require('./collection')
   , log = require('../../config/log')
-
-Promise.promisifyAll(request)
 
 let scheduledEvents = {}
 
@@ -17,15 +14,12 @@ exports.resetScheduledEvents = () => {
 }
 
 exports.start = function() {
-  return Event.
-    findAsync().
-    bind(this).
-    then(docs => {
-      const skip = docs.length === 0
-      if (skip) return
-      return Promise.each(docs, this.create)
-    }).
-    catch(err => log.info(`scheduler failed to start ${err}`))
+  return Event.find().then(docs => {
+    const skip = docs.length === 0
+    if (skip) return
+    return Promise.all(docs.map(this.create))
+  }).
+  catch(err => log.info(`scheduler failed to start ${err}`))
 }
 
 exports.create = function(event) {
@@ -34,16 +28,22 @@ exports.create = function(event) {
     new Date(event.when)
 
   scheduledEvents[event._id] = scheduler.scheduleJob(cron, () => {
-    return request.
-      getAsync({url: event.url}).
-      then(res => {
+    const options = {url: event.url}
+    return request.get(options, (err, res) => {
+      return new Promise((resolve, reject) => {
+        if (err) {
+          log.error(`scheduler#job failed to send ${err}`)
+          return reject(err)
+        }
+
         log.info('scheduler#job sent', {
           statusCode: res.statusCode,
           body: res.body,
           headers: res.headers
         })
-      }).
-      catch(err => log.error(`scheduler#job failed to send ${err}`))
+        resolve(res.body)
+      })
+    })
   })
 
   log.info('scheduler#job scheduled', event)

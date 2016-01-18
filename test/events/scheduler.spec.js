@@ -33,7 +33,7 @@ describe('Events:SchedulerSpec', () => {
 
     beforeEach(() => {
       return Event.
-        createAsync(event).
+        create(event).
         then(() => Scheduler.start())
     })
 

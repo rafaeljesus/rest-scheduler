@@ -15,13 +15,13 @@ describe('Events:RoutesSpec', () => {
 
   beforeEach(() => {
     return Event.
-      createAsync(event).
+      create(event).
       then(doc => {
         evt1 = doc
       })
   })
 
-  afterEach(() => Event.removeAsync())
+  afterEach(() => Event.remove())
 
   describe('GET /v1/events/:id', () => {
     it('should find a event by id', done => {

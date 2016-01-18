@@ -29,13 +29,12 @@ router.
    */
   post('/v1/events', function *() {
     const event = this.request.body
-    yield Event.
-      createAsync(event).
-      bind(this).
+    this.body = yield Event.
+      create(event).
       then(res => {
         event._id = res._id
         Scheduler.create(event)
-        this.body = res._id
+        return res._id
       }).
       catch(err => this.throw(422, err))
   }).
@@ -58,12 +57,11 @@ router.
   put('/v1/events/:id', function *() {
     const body = this.request.body
     const _id = this.params.id
-    yield Event.
-      findByIdAndUpdateAsync(_id, body).
-      bind(this).
+    this.body = yield Event.
+      findByIdAndUpdate(_id, body).
       then(res => {
         Scheduler.update(_id, body)
-        this.body = res
+        return res
       }).
       catch(err => this.throw(412, err))
   }).
@@ -91,12 +89,11 @@ router.
    */
   get('/v1/events/:id', function *() {
     const _id = this.params.id
-    yield Event.
-      findByIdAsync(_id).
-      bind(this).
+    this.body = yield Event.
+      findById(_id).
       then(res => {
         if (!res) return this.throw(404)
-        this.body = res
+        return res
       }).
       catch(err => this.throw(412, err))
   }).
@@ -114,7 +111,7 @@ router.
   delete('/v1/events/:id', function *() {
     const _id = this.params.id
     yield Promise.race([
-      Event.removeAsync({_id: _id}),
+      Event.remove({_id: _id}),
       Scheduler.cancel(_id)
     ]).
     then(() => {
