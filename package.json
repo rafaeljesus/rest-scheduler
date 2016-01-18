@@ -1,6 +1,6 @@
 {
   "name": "rest-scheduler",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Handles job scheduling and execute in the future",
   "main": "./index.js",
   "scripts": {
