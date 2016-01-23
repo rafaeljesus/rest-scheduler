@@ -29,14 +29,14 @@ router.
    */
   post('/v1/events', function *() {
     const event = this.request.body
-    this.body = yield Event.
-      create(event).
-      then(res => {
-        event._id = res._id
-        Scheduler.create(event)
-        return res._id
-      }).
-      catch(err => this.throw(422, err))
+    try {
+      const res = yield Event.create(event)
+      event._id = res._id
+      yield Scheduler.create(event)
+      this.body = res._id
+    } catch (err) {
+      this.throw(422, err)
+    }
   }).
   /**
    * @api {put} /v1/events/:id Update a Event
@@ -57,13 +57,15 @@ router.
   put('/v1/events/:id', function *() {
     const body = this.request.body
     const _id = this.params.id
-    this.body = yield Event.
-      findByIdAndUpdate(_id, body).
-      then(res => {
-        Scheduler.update(_id, body)
-        return res
-      }).
-      catch(err => this.throw(412, err))
+    try {
+      const res = yield {
+        event: Event.findByIdAndUpdate(_id, body)
+        schedule: Scheduler.update(_id, body)
+      }
+      this.body = res.event
+    } catch (err) {
+      this.throw(412, err)
+    }
   }).
   /**
    * @api {get} /v1/events/:id Get detailed info about event
@@ -89,13 +91,13 @@ router.
    */
   get('/v1/events/:id', function *() {
     const _id = this.params.id
-    this.body = yield Event.
-      findById(_id).
-      then(res => {
-        if (!res) return this.throw(404)
-        return res
-      }).
-      catch(err => this.throw(412, err))
+    try {
+      const res = yield Event.findById(_id)
+      if (!res) this.throw(404)
+      this.body = res
+    } catch (err) {
+      this.throw(412, err)
+    }
   }).
   /**
    * @api {delete} /v1/events/:id Exclude a event
@@ -110,14 +112,15 @@ router.
    */
   delete('/v1/events/:id', function *() {
     const _id = this.params.id
-    yield Promise.race([
-      Event.remove({_id: _id}),
-      Scheduler.cancel(_id)
-    ]).
-    then(() => {
+    try {
+      yield [
+        Event.remove({_id: _id}),
+        Scheduler.cancel(_id)
+      ]
       this.status = 204
-    }).
-    catch(err => this.throw(412, err))
+    } catch (err) {
+      this.throw(412, err)
+    }
   })
 
 module.exports = router
