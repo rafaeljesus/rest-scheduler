@@ -1,9 +1,12 @@
 'use strict'
 
 const krouter = require('koa-router')
-  , router = krouter()
-  , Scheduler = require('./scheduler')
-  , Event = require('./collection')
+const router = krouter()
+
+const Scheduler = require('./scheduler')
+const Event = require('./collection')
+
+module.exports = router
 
 router.
   /**
@@ -59,7 +62,7 @@ router.
     const _id = this.params.id
     try {
       const res = yield {
-        event: Event.findByIdAndUpdate(_id, body)
+        event: Event.findByIdAndUpdate(_id, body),
         schedule: Scheduler.update(_id, body)
       }
       this.body = res.event
@@ -122,5 +125,3 @@ router.
       this.throw(412, err)
     }
   })
-
-module.exports = router

@@ -1,9 +1,10 @@
 'use strict'
 
 const request = require('request')
-  , scheduler = require('node-schedule')
-  , Event = require('./collection')
-  , log = require('../../config/log')
+const scheduler = require('node-schedule')
+
+const Event = require('./collection')
+const log = require('../../config/log')
 
 let scheduledEvents = {}
 

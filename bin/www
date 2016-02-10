@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 
 const http = require('http')
-  , Scheduler = require('../api/events/scheduler')
-  , log = require('../config/log')
-  , app = require('../')
-  , port = process.env.PORT || 3000
+
+const Scheduler = require('../api/events/scheduler')
+const log = require('../config/log')
+const app = require('../')
+const port = process.env.PORT || 3000
 
 require('../lib/mongo')
 

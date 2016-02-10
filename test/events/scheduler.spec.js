@@ -1,16 +1,20 @@
 'use strict'
 
 const scheduler = require('node-schedule')
-  , chai = require('chai')
-  , sinon = require('sinon')
-  , sinonAsPromised = require('sinon-as-promised')
-  , sinonChai = require('sinon-chai')
-  , Event = require('../../api/events/collection')
-  , Scheduler = require('../../api/events/scheduler')
-  , expect = chai.expect
+const chai = require('chai')
+const mocha = require('mocha')
+const coMocha = require('co-mocha')
+const sinon = require('sinon')
+const sinonAsPromised = require('sinon-as-promised')
+const sinonChai = require('sinon-chai')
+
+const Event = require('../../api/events/collection')
+const Scheduler = require('../../api/events/scheduler')
+const expect = chai.expect
 
 chai.use(sinonChai)
-sinonAsPromised(require('bluebird'))
+coMocha(mocha)
+sinonAsPromised(Promise)
 
 describe('Events:SchedulerSpec', () => {
 
@@ -31,10 +35,9 @@ describe('Events:SchedulerSpec', () => {
 
   describe('.start', () => {
 
-    beforeEach(() => {
-      return Event.
-        create(event).
-        then(() => Scheduler.start())
+    beforeEach(function *() {
+      yield Event.create(event)
+      yield Scheduler.start()
     })
 
     it('should schedule one job', () => {

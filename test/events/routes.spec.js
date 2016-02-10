@@ -1,9 +1,14 @@
 'use strict'
 
 const supertest = require('supertest')
-  , app = require('../../')
-  , request = supertest(app.listen())
-  , Event = require('../../api/events/collection')
+const mocha = require('mocha')
+const coMocha = require('co-mocha')
+
+const app = require('../../')
+const request = supertest(app.listen())
+const Event = require('../../api/events/collection')
+
+coMocha(mocha)
 
 describe('Events:RoutesSpec', () => {
 
@@ -13,15 +18,13 @@ describe('Events:RoutesSpec', () => {
     url: 'https://api.github.com/users/rafaeljesus/events'
   }
 
-  beforeEach(() => {
-    return Event.
-      create(event).
-      then(doc => {
-        evt1 = doc
-      })
+  beforeEach(function *() {
+    evt1 = yield Event.create(event)
   })
 
-  afterEach(() => Event.remove())
+  afterEach(function *() {
+    yield Event.remove()
+  })
 
   describe('GET /v1/events/:id', () => {
     it('should find a event by id', done => {

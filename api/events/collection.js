@@ -1,7 +1,7 @@
 'use strict'
 
 const mongoose = require('mongoose')
-  , Schema = mongoose.Schema
+const Schema = mongoose.Schema
 
 const Status = [
   'ACTIVE',

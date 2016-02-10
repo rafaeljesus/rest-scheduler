@@ -1,14 +1,15 @@
 'use strict'
 
 const koa = require('koa')
-  , kbody = require('koa-bodyparser')
-  , serve = require('koa-static')
-  , logger = require('koa-logger')
-  , helmet = require('koa-helmet')
-  , cors = require('kcors')
-  , homeAPI = require('./api/home/routes')
-  , eventsAPI = require('./api/events/routes')
-  , app = koa()
+const kbody = require('koa-bodyparser')
+const serve = require('koa-static')
+const logger = require('koa-logger')
+const helmet = require('koa-helmet')
+const cors = require('kcors')
+
+const homeAPI = require('./api/home/routes')
+const eventsAPI = require('./api/events/routes')
+const app = koa()
 
 app.use(kbody())
 app.use(logger())
