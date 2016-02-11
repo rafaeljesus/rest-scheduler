@@ -1,15 +1,21 @@
 'use strict'
 
-const supertest = require('supertest')
+const Lab = require('lab')
+const code = require('code')
 
-const app = require('../../')
-const request = supertest(app.listen())
+const wrap = require('../wrap')
+const server = require('../../')
 
-describe('Home:RoutesSpec', () => {
+const lab = exports.lab = Lab.script()
+const expect = code.expect
 
-  it('should return 200', done => {
-    request.
-      get('/').
-      expect(200, done)
-  });
-});
+lab.experiment('home', () => {
+  lab.test('GET /v1', wrap(function *() {
+    const res = yield server.injectThen({
+      method: 'GET',
+      url: '/v1'
+    })
+    expect(res.statusCode).to.equal(200)
+    expect(res.result.status).to.equal('Rest Scheduler API')
+  }))
+})
