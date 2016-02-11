@@ -1,75 +1,79 @@
 'use strict'
 
-const supertest = require('supertest')
-const mocha = require('mocha')
-const coMocha = require('co-mocha')
+const Lab = require('lab')
+const code = require('code')
 
-const app = require('../../')
-const request = supertest(app.listen())
+const wrap = require('../wrap')
 const Event = require('../../api/events/collection')
+const server = require('../../')
 
-coMocha(mocha)
+const lab = exports.lab = Lab.script()
+const expect = code.expect
 
-describe('Events:RoutesSpec', () => {
+require('../../lib/mongo')
 
+lab.experiment('events', () => {
   let evt1
   let event = {
     cron: '* * * * *',
     url: 'https://api.github.com/users/rafaeljesus/events'
   }
 
-  beforeEach(function *() {
+  lab.beforeEach(wrap(function *() {
     evt1 = yield Event.create(event)
-  })
+  }))
 
-  afterEach(function *() {
+  lab.afterEach(wrap(function *() {
     yield Event.remove()
+  }))
+
+  lab.experiment('GET /v1/events/:id', () => {
+    lab.test('should find a event by id', wrap(function *() {
+      const res = yield server.injectThen({
+        method: 'GET',
+        url: `/v1/events/${evt1._id}`
+      })
+      expect(res.statusCode).to.equal(200)
+    }))
   })
 
-  describe('GET /v1/events/:id', () => {
-    it('should find a event by id', done => {
-      request.
-        get(`/v1/events/${evt1._id}`).
-        set('Accept', 'application/json').
-        expect('Content-Type', /json/).
-        expect(200, done)
-    })
-  })
-
-  describe('POST /v1/events', () => {
-    it('should create a event', done => {
+  lab.experiment('POST /v1/events', () => {
+    lab.test('should create a event', wrap(function *() {
       evt1._id = undefined
-      const newEvent = evt1
-      request.
-        post('/v1/events').
-        set('Accept', 'application/json').
-        send(newEvent).
-        expect('Content-Type', /json/).
-        expect(200, done)
-    })
+      let newEvent = evt1
+
+      const res = yield server.injectThen({
+        method: 'POST',
+        url: '/v1/events',
+        payload: newEvent
+      })
+      expect(res.statusCode).to.equal(200)
+    }))
   })
 
-  describe('PUT /v1/events/:id', () => {
-    it('should update a event', done => {
+  lab.experiment('PUT /v1/events/:id', () => {
+    lab.test('should update a event', wrap(function *() {
       let _id = evt1._id
       evt1._id = undefined
       evt1.url = 'https://github.com/rafaeljesus'
 
-      request.
-        put(`/v1/events/${_id}`).
-        send(evt1).
-        set('Accept', 'application/json').
-        expect('Content-Type', /json/).
-        expect(200, done)
-    })
+      const res = yield server.injectThen({
+        method: 'PUT',
+        url: `/v1/events/${_id}`,
+        payload: evt1
+      })
+      expect(res.statusCode).to.equal(200)
+    }))
   })
 
-  describe('DELETE /v1/events/:id', () => {
-    it('should delete a event', done => {
-      request.
-        delete(`/v1/events/${evt1._id}`).
-        set('Accept', 'application/json').
-        expect(204, done)
-    })
+  lab.experiment('DELETE /v1/events/:id', () => {
+    lab.test('should delete a event', wrap(function *() {
+      const res = yield server.injectThen({
+        method: 'DELETE',
+        url: `/v1/events/${evt1._id}`
+      })
+      expect(res.statusCode).to.equal(200)
+      expect(res.result).to.equal('success')
+    }))
   })
 })

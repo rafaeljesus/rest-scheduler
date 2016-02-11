@@ -3,9 +3,11 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+mongoose.Promise = global.Promise
+
 const Status = [
-  'ACTIVE',
-  'PAUSED'
+  'active',
+  'paused'
 ]
 
 const Event = Schema({

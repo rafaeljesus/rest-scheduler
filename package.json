@@ -10,6 +10,7 @@
   "author": "Rafael Jesus <rafaelljesus86@gmail.com> (http://github.com/rafaeljesus)",
   "license": "MIT",
   "dependencies": {
+    "boom": "^3.1.2",
     "co": "^4.6.0",
     "good": "6.6.0",
     "good-winston-reporter": "1.0.0",

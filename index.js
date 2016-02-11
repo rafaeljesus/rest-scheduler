@@ -32,18 +32,16 @@ server.register({
   register: require('hapi-router'),
   options: {
     routes: '**/*routes.js',
-    ignore: 'node_modules/**',
-    cwd: 'api'
+    ignore: 'node_modules/**'
   }
 }, {
   routes: {prefix: '/v1'}
-}, err => {
+}, (err) => {
   if (err) throw err
 })
 
-
 if (process.env.NODE_ENV === 'test') {
-  server.register(require('inject-then'), err => {
+  server.register(require('inject-then'), (err) => {
     if (err) throw err
   })
 }
@@ -65,12 +63,12 @@ server.register({
       }
     }]
   }
-}, err => {
+}, (err) => {
   if (err) throw err
 })
 
 if (!module.parent) {
-  server.start(err => {
+  server.start((err) => {
     if (err) throw err
     log.info(`Server started at: ${server.info.uri}`)
   })
