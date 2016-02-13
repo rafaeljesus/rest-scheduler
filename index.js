@@ -71,11 +71,4 @@ server.register({
   if (err) throw err
 })
 
-if (!module.parent) {
-  server.start((err) => {
-    if (err) throw err
-    server.log(`Server started at: ${server.info.uri}`)
-  })
-}
-
 module.exports = server
