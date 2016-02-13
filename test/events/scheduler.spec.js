@@ -1,104 +1,88 @@
 'use strict'
 
-const scheduler = require('node-schedule')
-const chai = require('chai')
-const mocha = require('mocha')
-const coMocha = require('co-mocha')
-const sinon = require('sinon')
-const sinonAsPromised = require('sinon-as-promised')
-const sinonChai = require('sinon-chai')
+const Lab = require('lab')
+const code = require('code')
 
 const Event = require('../../api/events/collection')
 const Scheduler = require('../../api/events/scheduler')
-const expect = chai.expect
+const wrap = require('../wrap')
 
-chai.use(sinonChai)
-coMocha(mocha)
-sinonAsPromised(Promise)
+const lab = exports.lab = Lab.script()
+const expect = code.expect
 
-describe('Events:SchedulerSpec', () => {
+require('../../lib/mongo')
 
-  let scheduleJobSpy
+lab.experiment('scheduler', () => {
   let event = {
     cron: '* * * * *',
     url: 'https://api.github.com/users/rafaeljesus/events'
   }
 
-  beforeEach(() => {
-    scheduleJobSpy = sinon.spy(scheduler, 'scheduleJob')
-  })
-
-  afterEach(() => {
-    scheduleJobSpy.restore()
+  lab.afterEach((done) => {
     Scheduler.resetScheduledEvents()
+    done()
   })
 
-  describe('.start', () => {
-
-    beforeEach(function *() {
+  lab.experiment('.start', () => {
+    lab.beforeEach(wrap(function *() {
       yield Event.create(event)
       yield Scheduler.start()
-    })
+    }))
 
-    it('should schedule one job', () => {
-      expect(Scheduler.getScheduledEvents()).to.be.ok
+    lab.test('should schedule one job', (done) => {
+      expect(Scheduler.getScheduledEvents()).to.be.an.object()
+      done()
     })
   })
 
-  describe('.create', () => {
-
-    beforeEach(() => {
+  lab.experiment('.create', () => {
+    lab.beforeEach((done) => {
       event._id = 'foo'
       Scheduler.create(event)
+      done()
     })
 
-    it('should have one scheduled running jobs', () => {
+    lab.test('should have one scheduled running jobs', (done) => {
       const running = Scheduler.getScheduledEvents()
       const len = Object.keys(running).length
       expect(len).to.equal(1)
-      expect(running).to.be.ok
-    })
-
-    it('should schedule new event', () => {
-      expect(scheduleJobSpy).to.have.been.calledWith(event.cron)
+      expect(running).to.be.an.object()
+      done()
     })
   })
 
-  describe('.update', () => {
-
-    beforeEach(() => {
+  lab.experiment('.update', () => {
+    lab.beforeEach((done) => {
       event._id = 'foo'
       Scheduler.create(event)
-    })
-
-    it('should update scheduled event', () => {
       event.cron = '1 * * * *'
       Scheduler.update(event._id, event)
-      expect(scheduleJobSpy).to.have.been.calledWith(event.cron)
+      done()
     })
 
-    it('should have one scheduled running jobs', () => {
+    lab.test('should have one scheduled running jobs', (done) => {
       const running = Scheduler.getScheduledEvents()
       const len = Object.keys(running).length
       expect(len).to.equal(1)
-      expect(running).to.be.ok
+      expect(running).to.exist()
+      done()
     })
   })
 
-  describe('.cancel', () => {
-
-    beforeEach(() => {
+  lab.experiment('.cancel', () => {
+    lab.beforeEach((done) => {
       event._id = 'foo'
       Scheduler.create(event)
+      done()
     })
 
-    it('should cancel a scheduled job', () => {
+    lab.test('should cancel a scheduled job', (done) => {
       Scheduler.cancel(event._id)
       const running = Scheduler.getScheduledEvents()
       const len = Object.keys(running).length
-      expect(running[event._id]).to.not.exist
+      expect(running[event._id]).to.not.exist()
       expect(len).to.equal(0)
+      done()
     })
   })
-
 })
