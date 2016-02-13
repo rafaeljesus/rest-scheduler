@@ -10,8 +10,6 @@ const wrap = require('../wrap')
 const lab = exports.lab = Lab.script()
 const expect = code.expect
 
-require('../../lib/mongo')
-
 lab.experiment('scheduler', () => {
   let event = {
     cron: '* * * * *',

@@ -10,8 +10,6 @@ const server = require('../../')
 const lab = exports.lab = Lab.script()
 const expect = code.expect
 
-require('../../lib/mongo')
-
 lab.experiment('events', () => {
   let evt1
   let event = {
