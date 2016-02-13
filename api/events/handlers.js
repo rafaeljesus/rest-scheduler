@@ -37,7 +37,7 @@ exports.show = wrap(function *(request, reply) {
   }
 })
 
-exports.del = wrap(function *(request, reply) {
+exports.destroy = wrap(function *(request, reply) {
   try {
     yield [
       Event.remove({_id: request.params.id}),

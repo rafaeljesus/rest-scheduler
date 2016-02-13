@@ -10,11 +10,14 @@ const server = require('../../')
 const lab = exports.lab = Lab.script()
 const expect = code.expect
 
+require('../../lib/mongo')
+
 lab.experiment('events', () => {
   let evt1
   let event = {
     cron: '* * * * *',
-    url: 'https://api.github.com/users/rafaeljesus/events'
+    url: 'https://api.github.com/users/rafaeljesus/events',
+    status: 'active'
   }
 
   lab.beforeEach(wrap(function *() {
@@ -37,13 +40,14 @@ lab.experiment('events', () => {
 
   lab.experiment('POST /v1/events', () => {
     lab.test('should create a event', wrap(function *() {
-      evt1._id = undefined
-      let newEvent = evt1
-
       const res = yield server.injectThen({
         method: 'POST',
         url: '/v1/events',
-        payload: newEvent
+        payload: {
+          url: evt1.url,
+          cron: evt1.cron,
+          status: evt1.status
+        }
       })
       expect(res.statusCode).to.equal(200)
     }))
@@ -51,14 +55,14 @@ lab.experiment('events', () => {
 
   lab.experiment('PUT /v1/events/:id', () => {
     lab.test('should update a event', wrap(function *() {
-      let _id = evt1._id
-      evt1._id = undefined
-      evt1.url = 'https://github.com/rafaeljesus'
-
       const res = yield server.injectThen({
         method: 'PUT',
-        url: `/v1/events/${_id}`,
-        payload: evt1
+        url: `/v1/events/${evt1._id}`,
+        payload: {
+          url: 'https://github.com/rafaeljesus',
+          cron: evt1.cron,
+          status: evt1.status
+        }
       })
       expect(res.statusCode).to.equal(200)
     }))
