@@ -2,9 +2,7 @@
 
 const server = require('../')
 
-if (!module.parent) {
-  server.start((err) => {
-    if (err) throw err
-    server.log(`Rest Scheduler started at: ${server.info.uri}`)
-  })
-}
+server.start((err) => {
+  if (err) throw err
+  server.log(`Rest Scheduler started at: ${server.info.uri}`)
+})

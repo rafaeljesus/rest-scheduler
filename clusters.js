@@ -7,14 +7,6 @@ const Scheduler = require('./api/events/scheduler')
 const log = require('./lib/log')
 
 if (cluster.isMaster) {
-  require('./lib/mongo')
-
-  const startJobs = function *() {
-    yield Scheduler.start()
-  }
-
-  startJobs().next()
-
   CPUS.forEach(() => cluster.fork())
 
   cluster.on('listening', (worker) => log.info(`Worker ${worker.process.pid} connected`))
@@ -27,4 +19,12 @@ if (cluster.isMaster) {
 
 if (cluster.isWorker) {
   require('./bin/www')
+  require('./lib/mongo')
+
+  if (cluster.worker.id === 1) {
+    const startJobs = function *() {
+      yield Scheduler.start()
+    }
+    startJobs().next()
+  }
 }
