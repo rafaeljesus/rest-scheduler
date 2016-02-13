@@ -23,8 +23,8 @@ npm test
 ```
 
 ## Built with
-- [nodejs](https://https://nodejs.org) Backend is a node-v.5.3.0.
-- [koa](http://koajs.com) API is a KOA app. It respond to requests RESTfully in JSON.
+- [nodejs](https://https://nodejs.org) Backend is a nodejs latest.
+- [hapijs](http://hapijs.com) API is a Hapi server. It respond to requests RESTfully in JSON.
 - [Mongodb](https://www.mongodb.com) Mongodb as a data store.
 
 ## Docker
@@ -40,10 +40,8 @@ $ docker run -it -e "NODE_ENV=development" -v "$(pwd)":/data --link mongo:mongo 
 $ curl `docker-machine ip default`:3000
 ```
 
-## API documentation
-We use source code comments to add documentation.
-
-You can browse an HTML documenation at [docs](http://rest-scheduler.herokuapp.com/apidoc/index.html)
+## API
+You can find how to send requests at test/ directory
 
 ## Contributing
 - Fork it
