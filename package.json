@@ -4,7 +4,7 @@
   "description": "Handles job scheduling and execute in the future",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node clusters.js",
     "test": "standard && lab -v -C -a code -m 5000 -c --coverage-exclude config --coverage-exclude node_modules --coverage-exclude lib --coverage-exclude index"
   },
   "author": "Rafael Jesus <rafaelljesus86@gmail.com> (http://github.com/rafaeljesus)",

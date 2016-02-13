@@ -1,19 +1,10 @@
 #!/usr/bin/env node
 
-const http = require('http')
+const server = require('../')
 
-const Scheduler = require('../api/events/scheduler')
-const log = require('../config/log')
-const app = require('../')
-const port = process.env.PORT || 3000
-
-require('../lib/mongo')
-
-Scheduler.start()
-
-http.globalAgent.maxSockets = Infinity
-http.createServer(app.callback())
-
-app.listen(port)
-
-log.info(`Rest Scheduler API - port ${port}`)
+if (!module.parent) {
+  server.start((err) => {
+    if (err) throw err
+    server.log(`Rest Scheduler started at: ${server.info.uri}`)
+  })
+}
