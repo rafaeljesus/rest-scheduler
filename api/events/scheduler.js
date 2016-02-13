@@ -31,24 +31,9 @@ exports.create = function (event) {
     ? event.cron
     : new Date(event.when)
 
-  scheduledEvents[event._id] = scheduler.scheduleJob(cron, () => {
-    const options = {url: event.url}
-    return request.get(options, (err, res) => {
-      return new Promise((resolve, reject) => {
-        if (err) {
-          log.info(`scheduler#job failed to send ${err}`)
-          return reject(err)
-        }
-
-        log.info('scheduler#job sent', {
-          statusCode: res.statusCode,
-          body: res.body,
-          headers: res.headers
-        })
-        resolve(res.body)
-      })
-    })
-  })
+  scheduledEvents[event._id] = scheduler.scheduleJob(cron, wrap(function *() {
+    yield sendRequest({url: event.url})
+  }))
 
   log.info('scheduler#job scheduled', event.toObject ? event.toObject() : event)
   return scheduledEvents
@@ -65,4 +50,22 @@ exports.update = function (_id, event) {
   event._id = _id
   this.cancel(_id)
   return this.create(event)
+}
+
+function sendRequest (options) {
+  return new Promise((resolve, reject) => {
+    return request.get(options, (err, res) => {
+      if (err) {
+        log.info(`scheduler#job failed to send ${err}`)
+        return reject(err)
+      }
+
+      log.info('scheduler#job sent', {
+        statusCode: res.statusCode,
+        body: res.body,
+        headers: res.headers
+      })
+      resolve(res.body)
+    })
+  })
 }

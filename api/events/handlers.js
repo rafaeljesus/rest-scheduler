@@ -1,7 +1,6 @@
 'use strict'
 
 const wrap = require('co').wrap
-const Boom = require('boom')
 
 const Scheduler = require('./scheduler')
 const Event = require('./collection')
@@ -12,7 +11,7 @@ exports.create = wrap(function *(request, reply) {
     Scheduler.create(res)
     reply(res._id)
   } catch (err) {
-    reply(Boom.wrap(err), 422)
+    reply.badData(err)
   }
 })
 
@@ -24,17 +23,17 @@ exports.update = wrap(function *(request, reply) {
     }
     reply(res.event)
   } catch (err) {
-    reply(Boom.wrap(err), 412)
+    reply.preconditionFailed(err)
   }
 })
 
 exports.show = wrap(function *(request, reply) {
   try {
     const event = yield Event.findById(request.params.id)
-    if (!event) return Boom.notFound('Event not found')
+    if (!event) return reply.notFound('Event not found')
     reply(event)
   } catch (err) {
-    reply(Boom.wrap(err), 412)
+    reply.preconditionFailed(err)
   }
 })
 
@@ -46,6 +45,6 @@ exports.del = wrap(function *(request, reply) {
     ]
     reply('success')
   } catch (err) {
-    reply(Boom.wrap(err), 412)
+    reply.preconditionFailed(err)
   }
 })

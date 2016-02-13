@@ -5,16 +5,16 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "standard && lab --verbose --colors --assert code --timeout 5000 --coverage"
+    "test": "standard && lab -v -C -a code -m 5000 -c --coverage-exclude config --coverage-exclude node_modules --coverage-exclude lib --coverage-exclude index"
   },
   "author": "Rafael Jesus <rafaelljesus86@gmail.com> (http://github.com/rafaeljesus)",
   "license": "MIT",
   "dependencies": {
-    "boom": "^3.1.2",
-    "co": "^4.6.0",
+    "co": "4.6.0",
     "good": "6.6.0",
     "good-winston-reporter": "1.0.0",
     "hapi": "13.0.0",
+    "hapi-boom-decorators": "1.1.2",
     "hapi-router": "3.4.0",
     "joi": "7.2.3",
     "mongoose": "4.3.3",
@@ -28,8 +28,6 @@
     "code": "^2.1.0",
     "inject-then": "^2.0.5",
     "lab": "^8.2.0",
-    "sinon": "^1.17.2",
-    "sinon-as-promised": "^4.0.0",
     "standard": "^6.0.4"
   },
   "standard": {

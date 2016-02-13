@@ -4,8 +4,6 @@ const Hapi = require('hapi')
 const good = require('good')
 const GoodWinstonReporter = require('good-winston-reporter')
 
-const log = require('./lib/log')
-
 const server = new Hapi.Server({
   debug: {
     request: ['error', 'validation']
@@ -40,6 +38,12 @@ server.register({
   if (err) throw err
 })
 
+server.register({
+  register: require('hapi-boom-decorators')
+}, (err) => {
+  if (err) throw err
+})
+
 if (process.env.NODE_ENV === 'test') {
   server.register(require('inject-then'), (err) => {
     if (err) throw err
@@ -59,7 +63,7 @@ server.register({
         error: 'error'
       },
       config: {
-        logger: log
+        logger: require('./lib/log')
       }
     }]
   }
@@ -70,7 +74,7 @@ server.register({
 if (!module.parent) {
   server.start((err) => {
     if (err) throw err
-    log.info(`Server started at: ${server.info.uri}`)
+    server.log(`Server started at: ${server.info.uri}`)
   })
 }
 
