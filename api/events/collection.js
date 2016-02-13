@@ -16,4 +16,6 @@ const Event = Schema({
   status: {type: String, enum: Status}
 })
 
+Event.statics.status = Status
+
 module.exports = mongoose.model('events', Event)
