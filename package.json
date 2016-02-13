@@ -1,41 +1,41 @@
 {
-  "name": "rest-scheduler",
-  "version": "0.1.7",
-  "description": "Handles job scheduling and execute in the future",
-  "main": "index.js",
-  "scripts": {
-    "start": "node clusters.js",
-    "test": "standard && lab -v -C -a code -m 5000 -c --coverage-exclude config --coverage-exclude node_modules --coverage-exclude lib --coverage-exclude index"
-  },
-  "author": "Rafael Jesus <rafaelljesus86@gmail.com> (http://github.com/rafaeljesus)",
-  "license": "MIT",
-  "dependencies": {
-    "co": "4.6.0",
-    "good": "6.6.0",
-    "good-winston-reporter": "1.0.0",
-    "hapi": "13.0.0",
-    "hapi-boom-decorators": "1.1.2",
-    "hapi-router": "3.4.0",
-    "joi": "7.2.3",
-    "mongoose": "4.3.3",
-    "node-schedule": "0.6.0",
-    "request": "2.67.0",
-    "supports-color": "3.1.2",
-    "winston": "2.1.1"
-  },
-  "devDependencies": {
-    "co-lab": "0.0.1",
-    "code": "^2.1.0",
-    "inject-then": "^2.0.5",
-    "lab": "^8.2.0",
-    "standard": "^6.0.4"
-  },
-  "standard": {
-    "ignore": [
-      ""
-    ]
-  },
-  "engines": {
-    "node": "5.4.1"
-  }
+    "name": "rest-scheduler",
+    "version": "0.1.8",
+    "description": "Handles job scheduling and execute in the future",
+    "main": "index.js",
+    "scripts": {
+        "start": "node clusters.js",
+        "test": "standard && lab -v -C -a code -m 5000 -c --coverage-exclude config --coverage-exclude node_modules --coverage-exclude lib --coverage-exclude index"
+    },
+    "author": "Rafael Jesus <rafaelljesus86@gmail.com> (http://github.com/rafaeljesus)",
+    "license": "MIT",
+    "dependencies": {
+        "co": "4.6.0",
+        "good": "6.6.0",
+        "good-winston-reporter": "1.0.0",
+        "hapi": "13.0.0",
+        "hapi-boom-decorators": "1.1.2",
+        "hapi-router": "3.4.0",
+        "joi": "7.2.3",
+        "mongoose": "4.3.3",
+        "node-schedule": "0.6.0",
+        "request": "2.67.0",
+        "supports-color": "3.1.2",
+        "winston": "2.1.1"
+    },
+    "devDependencies": {
+        "co-lab": "0.0.1",
+        "code": "^2.1.0",
+        "inject-then": "^2.0.5",
+        "lab": "^8.2.0",
+        "standard": "^6.0.4"
+    },
+    "standard": {
+        "ignore": [
+            ""
+        ]
+    },
+    "engines": {
+        "node": "5.4.1"
+    }
 }
