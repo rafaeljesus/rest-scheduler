@@ -4,7 +4,7 @@
   "description": "Handles job scheduling and execute in the future",
   "scripts": {
     "start": "node clusters.js",
-    "test": "npm run lint && lab -C -l -a code -m 5000 -c -t 90 --coverage-exclude config --coverage-exclude node_modules --coverage-exclude lib --coverage-exclude index -T test/lab.babel",
+    "test": "npm run lint && lab -C -l -a code -m 5000 -T test/lab.babel",
     "lint": "standard --verbose | snazzy"
   },
   "author": "Rafael Jesus <rafaelljesus86@gmail.com> (http://github.com/rafaeljesus)",
