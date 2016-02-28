@@ -1,9 +1,7 @@
-'use strict'
+import * as handlers from './handlers'
+import * as validate from './validate'
 
-const handlers = require('./handlers')
-const validate = require('./validate')
-
-module.exports = [{
+export default [{
   path: '/events',
   method: 'POST',
   config: {

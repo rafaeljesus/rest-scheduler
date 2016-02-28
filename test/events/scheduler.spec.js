@@ -1,11 +1,9 @@
-'use strict'
+import Lab from 'lab'
+import code from 'code'
 
-const Lab = require('lab')
-const code = require('code')
-
-const Event = require('../../api/events/collection')
-const Scheduler = require('../../api/events/scheduler')
-const wrap = require('../wrap')
+import wrap from '../wrap'
+import Event from '../../api/events/collection'
+import * as Scheduler from '../../api/events/scheduler'
 
 const lab = exports.lab = Lab.script()
 const expect = code.expect
@@ -24,9 +22,9 @@ lab.experiment('scheduler', () => {
   })
 
   lab.experiment('.start', () => {
-    lab.beforeEach(wrap(function *() {
-      yield Event.create(event)
-      yield Scheduler.start()
+    lab.beforeEach(wrap(async function () {
+      await Event.create(event)
+      await Scheduler.start()
     }))
 
     lab.test('should schedule one job', (done) => {

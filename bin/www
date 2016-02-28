@@ -1,6 +1,21 @@
 #!/usr/bin/env node
 
-const server = require('../')
+require('babel-register')
+require('babel-polyfill')
+
+require('../lib/mongo')
+
+const cluster = require('cluster')
+
+const Scheduler = require('../api/events/scheduler')
+const server = require('../').default
+
+if (cluster.worker.id === 1) {
+  const startJobs = function *() {
+    yield Scheduler.start()
+  }
+  startJobs().next()
+}
 
 server.start((err) => {
   if (err) throw err

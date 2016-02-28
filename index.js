@@ -1,8 +1,8 @@
-'use strict'
+import Hapi from 'hapi'
+import good from 'good'
+import GoodWinstonReporter from 'good-winston-reporter'
 
-const Hapi = require('hapi')
-const good = require('good')
-const GoodWinstonReporter = require('good-winston-reporter')
+import log from './lib/log'
 
 const server = new Hapi.Server({
   debug: {
@@ -63,7 +63,7 @@ server.register({
         error: 'error'
       },
       config: {
-        logger: require('./lib/log')
+        logger: log
       }
     }]
   }
@@ -71,4 +71,4 @@ server.register({
   if (err) throw err
 })
 
-module.exports = server
+export default server

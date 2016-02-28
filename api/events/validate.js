@@ -1,8 +1,6 @@
-'use strict'
+import Joi from 'joi'
 
-const Joi = require('joi')
-
-const Event = require('./collection')
+import Event from './collection'
 
 const id = Joi.string().required()
 const schema = Joi.object({
@@ -11,19 +9,17 @@ const schema = Joi.object({
   status: Joi.only(Event.status)
 })
 
-exports.create = {
-  payload: schema
-}
-
-exports.update = {
+const create = {payload: schema}
+const show = {params: {id: id}}
+const destroy = {params: {id: id}}
+const update = {
   params: {id: id},
   payload: schema
 }
 
-exports.show = {
-  params: {id: id}
-}
-
-exports.destroy = {
-  params: {id: id}
+export {
+  create,
+  update,
+  show,
+  destroy
 }

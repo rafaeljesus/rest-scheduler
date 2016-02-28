@@ -1,11 +1,9 @@
-'use strict'
+import Lab from 'lab'
+import code from 'code'
 
-const Lab = require('lab')
-const code = require('code')
-
-const wrap = require('../wrap')
-const Event = require('../../api/events/collection')
-const server = require('../../')
+import wrap from '../wrap'
+import Event from '../../api/events/collection'
+import server from '../../'
 
 const lab = exports.lab = Lab.script()
 const expect = code.expect
@@ -20,17 +18,17 @@ lab.experiment('events', () => {
     status: 'active'
   }
 
-  lab.beforeEach(wrap(function *() {
-    evt1 = yield Event.create(event)
+  lab.beforeEach(wrap(async function () {
+    evt1 = await Event.create(event)
   }))
 
-  lab.afterEach(wrap(function *() {
-    yield Event.remove()
+  lab.afterEach(wrap(async function () {
+    await Event.remove()
   }))
 
   lab.experiment('GET /v1/events/:id', () => {
-    lab.test('should find a event by id', wrap(function *() {
-      const res = yield server.injectThen({
+    lab.test('should find a event by id', wrap(async function () {
+      const res = await server.injectThen({
         method: 'GET',
         url: `/v1/events/${evt1._id}`
       })
@@ -39,8 +37,8 @@ lab.experiment('events', () => {
   })
 
   lab.experiment('POST /v1/events', () => {
-    lab.test('should create a event', wrap(function *() {
-      const res = yield server.injectThen({
+    lab.test('should create a event', wrap(async function () {
+      const res = await server.injectThen({
         method: 'POST',
         url: '/v1/events',
         payload: {
@@ -54,8 +52,8 @@ lab.experiment('events', () => {
   })
 
   lab.experiment('PUT /v1/events/:id', () => {
-    lab.test('should update a event', wrap(function *() {
-      const res = yield server.injectThen({
+    lab.test('should update a event', wrap(async function () {
+      const res = await server.injectThen({
         method: 'PUT',
         url: `/v1/events/${evt1._id}`,
         payload: {
@@ -69,8 +67,8 @@ lab.experiment('events', () => {
   })
 
   lab.experiment('DELETE /v1/events/:id', () => {
-    lab.test('should delete a event', wrap(function *() {
-      const res = yield server.injectThen({
+    lab.test('should delete a event', wrap(async function () {
+      const res = await server.injectThen({
         method: 'DELETE',
         url: `/v1/events/${evt1._id}`
       })
