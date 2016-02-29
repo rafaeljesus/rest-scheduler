@@ -1,7 +1,7 @@
 import * as handlers from './handlers'
 import * as validate from './validate'
 
-export default [{
+module.exports = [{
   path: '/events',
   method: 'POST',
   config: {
