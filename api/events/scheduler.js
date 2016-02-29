@@ -1,60 +1,73 @@
-'use strict'
+import request from 'request'
+import scheduler from 'node-schedule'
 
-const wrap = require('co').wrap
-const request = require('request')
-const scheduler = require('node-schedule')
-
-const Event = require('./collection')
-const log = require('../../lib/log')
+import Event from './collection'
+import log from '../../lib/log'
 
 let scheduledEvents = {}
 
-exports.getScheduledEvents = () => scheduledEvents
-
-exports.resetScheduledEvents = () => {
-  scheduledEvents = {}
+export {
+  start,
+  create,
+  cancel,
+  update,
+  getScheduledEvents,
+  resetScheduledEvents
 }
 
-exports.start = wrap(function *() {
+async function start () {
   try {
-    let docs = yield Event.find()
+    let docs = await Event.find()
     const skip = docs.length === 0
     if (skip) return
-    yield Promise.all(docs.map(this.create))
+    await Promise.all(docs.map(create))
   } catch (err) {
     log.info(`scheduler failed to start ${err}`)
   }
-})
+}
 
-exports.create = function (event) {
+function create (event) {
   const cron = event.cron
     ? event.cron
     : new Date(event.when)
 
-  scheduledEvents[event._id] = scheduler.scheduleJob(cron, wrap(function *() {
-    yield sendRequest({url: event.url})
-  }))
+  scheduledEvents[event._id] = scheduler.scheduleJob(cron, async function () {
+    await sendRequest({url: event.url})
+  })
 
-  log.info('scheduler#job scheduled', event.toObject ? event.toObject() : event)
+  log.info('scheduler#job scheduled', {
+    _id: event.id,
+    status: event.status,
+    cron: event.cron,
+    url: event.url
+  })
   return scheduledEvents
 }
 
-exports.cancel = function (_id) {
+function cancel (_id) {
   let job = scheduledEvents[_id]
   if (!job) return
   job.cancel()
   delete scheduledEvents[_id]
 }
 
-exports.update = function (_id, event) {
+function update (_id, event) {
   event._id = _id
-  this.cancel(_id)
-  return this.create(event)
+  cancel(_id)
+  return create(event)
+}
+
+function getScheduledEvents () {
+  return scheduledEvents
+}
+
+function resetScheduledEvents () {
+  scheduledEvents = {}
 }
 
 function sendRequest (options) {
   return new Promise((resolve, reject) => {
-    return request.get(options, (err, res) => {
+    request.get(options, (err, res) => {
       if (err) {
         log.info(`scheduler#job failed to send ${err}`)
         return reject(err)

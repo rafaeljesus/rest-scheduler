@@ -1,17 +1,15 @@
-'use strict'
+import Lab from 'lab'
+import code from 'code'
 
-const Lab = require('lab')
-const code = require('code')
-
-const wrap = require('../wrap')
-const server = require('../../')
+import wrap from '../wrap'
+import server from '../../'
 
 const lab = exports.lab = Lab.script()
 const expect = code.expect
 
 lab.experiment('home', () => {
-  lab.test('GET /v1', wrap(function *() {
-    const res = yield server.injectThen({
+  lab.test('GET /v1', wrap(async function () {
+    const res = await server.injectThen({
       method: 'GET',
       url: '/v1'
     })

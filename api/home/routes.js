@@ -1,10 +1,10 @@
-'use strict'
+import * as handlers from './handlers'
 
-module.exports = [{
+export default [{
   path: '/',
   method: 'GET',
   config: {
     tags: ['api'],
-    handler: require('./handlers').index
+    handler: handlers.index
   }
 }]

@@ -1,6 +1,4 @@
-'use strict'
-
-exports.index = (request, reply) => {
+export function index (request, reply) {
   return reply({
     status: 'Rest Scheduler API'
   })

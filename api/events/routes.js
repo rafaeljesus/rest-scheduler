@@ -1,7 +1,5 @@
-'use strict'
-
-const handlers = require('./handlers')
-const validate = require('./validate')
+import * as handlers from './handlers'
+import * as validate from './validate'
 
 module.exports = [{
   path: '/events',
